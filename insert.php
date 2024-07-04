@@ -10,22 +10,23 @@
 <body>
     <div class="container">
         <div class="row">
-        <div class="col-md-2"></div>
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card-header">
                      <h1 class="intab">Student Details</h1>
                 </div>
                 <div class="card-body">
                     <button class="btn btn-success"><a href="add.php" class="text-light">Add Details</a></button>
                     <br/>
-                    <table class="table table-hover table-borderrd table-striped">
+                    <table class="table table-hover table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Age</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Changes</th>
+                                <th scope="col">District</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Hobbies</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,11 +46,15 @@
                                     $name = $row['name'];
                                     $age = $row['age'];
                                     $address = $row['address'];
+                                    $gender = $row['gender'];
+                                    $hobbies = $row['hobbies'];
                                     echo "<tr>
                                         <td>{$id}</td>
                                         <td>{$name}</td>
                                         <td>{$age}</td>
                                         <td>{$address}</td>
+                                        <td>{$gender}</td>
+                                        <td>{$hobbies}</td>
                                         <td>
                                             <button class='btn btn-success'><a href='edit.php?edit={$id}' class='text-light'>Edit</a></button>
                                             <button class='btn btn-danger'><a href='delete.php?del={$id}' class='text-light'>Delete</a></button>
@@ -66,7 +71,6 @@
                     </table>
                 </div>
             </div>
-            <div class="col-md-3"></div>
         </div>
     </div>
 </body>

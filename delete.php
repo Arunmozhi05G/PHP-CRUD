@@ -11,5 +11,10 @@ if (mysqli_query($connection, $sql)) {
 } else {
     echo "Something went wrong: " . $connection->error;
 }
+if ($conn->query($sql) === TRUE) {
+    echo "Record deleted successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
 
 ?>
