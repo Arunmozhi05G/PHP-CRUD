@@ -16,6 +16,7 @@
                 </div>
                 <div class="card-body">
                     <button class="btn btn-success"><a href="add.php" class="text-light">Add Details</a></button>
+                    <button class="btn btn-danger"><a href="login.php" class="text-light">Log Out</a></button>
                     <br/>
                     <table class="table table-hover table-bordered table-striped">
                         <thead>
