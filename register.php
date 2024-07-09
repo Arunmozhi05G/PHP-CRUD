@@ -1,24 +1,25 @@
 <?php
-session_start();
-$connection = mysqli_connect("localhost", "root", "", "admission");
-
 if (isset($_POST['submit'])) {
+    $connection = mysqli_connect("localhost", "root", "", "admission");
+
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $res = mysqli_query($connection, "SELECT * FROM login WHERE email = '$email'");
-    $row = mysqli_fetch_assoc($res);
+    
+    $stmt = $connection->prepare("INSERT INTO login (email, password) VALUES (?, ?)");
+    $stmt->bind_param("ss", $email, $password);
 
-    if (mysqli_num_rows($res) > 0) {
-        if ($password == $row["password"]) {
-            $_SESSION["login"] = true;
-            $_SESSION["id"] = $row["id"];
-            header("location: insert.php");
-        } else {
-            echo "<script> alert('Wrong password');</script>";
-        }
+    if ($stmt->execute()) {
+        echo '<script> location.replace("login.php")</script>';
     } else {
-        echo "<script> alert('User not registered');</script>";
+        echo "Something went wrong: " . $stmt->error;
     }
+
+    $stmt->close();
+    mysqli_close($connection);
 }
 ?>
 
@@ -27,20 +28,9 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script>
-        function validateForm() {
-            var email = document.forms["loginForm"]["email"].value;
-            var password = document.forms["loginForm"]["password"].value;
-            if (email == "" || password == "") {
-                alert("Both email and password must be filled out");
-                return false;
-            }
-            return true;
-        }
-    </script>
+    <title>Registration Page</title>
 </head>
 <body>
 <div class="container my-5">
@@ -48,10 +38,10 @@ if (isset($_POST['submit'])) {
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <div class="card-header">
-                <h1 class="intab">Login</h1>
+                <h1 class="intab">Registration</h1>
             </div>
             <div class="card-body">
-                <form name="loginForm" method="post" onsubmit="return validateForm()">
+                <form name="Form" method="post">
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" name="email" class="form-control" placeholder="Enter your email ID" required>
@@ -62,9 +52,8 @@ if (isset($_POST['submit'])) {
                     </div>
                     <br/>
                     <center>
-                        <input type="submit" class="btn btn-primary" name="submit" value="Login">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Register">
                     </center>
-                    <a href="register.php">Register Your ID</a>
                 </form>
             </div>
         </div>
