@@ -8,7 +8,16 @@ if (isset($_POST['submit'])) {
 
     $email = $_POST['email'];
     $password = $_POST['password'];
-    
+
+    $stmt = $connection->prepare("SELECT * FROM login WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script> alert('Email already exists!');</script>";
+    }
+    else{
     $stmt = $connection->prepare("INSERT INTO login (email, password) VALUES (?, ?)");
     $stmt->bind_param("ss", $email, $password);
 
@@ -17,7 +26,7 @@ if (isset($_POST['submit'])) {
     } else {
         echo "Something went wrong: " . $stmt->error;
     }
-
+}
     $stmt->close();
     mysqli_close($connection);
 }

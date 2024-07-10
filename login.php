@@ -1,6 +1,5 @@
 <?php
-session_start();
-$connection = mysqli_connect("localhost", "root", "", "admission");
+include_once 'session.php';
 
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];

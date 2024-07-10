@@ -1,9 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION["login"])) {
-    header("location: login.php");
-    exit();
-}
+include_once 'session.php';
 if (isset($_POST['submit'])) {
     $connection = mysqli_connect("localhost", "root", "", "admission");
 

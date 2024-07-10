@@ -1,11 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION["login"])) {
-    header("location: login.php");
-    exit();
-}
-$connection = mysqli_connect("localhost", "root", "", "admission");
-
+include_once 'session.php';
 if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
 }
